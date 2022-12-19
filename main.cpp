@@ -5,12 +5,8 @@ float f(float y){
     return pow(y,2)*cos(y)+1;
 }
 
-float err(float a, float b){
-    return abs((b-a)/2);
-}
-
-void bisez(float a, float b, int i){
-    float x=0;
+void bisez(float a, float b){
+    float x=0,err=0;
     do {
         x=(a+b)/2;
         if(f(x)!=0) {
@@ -19,13 +15,11 @@ void bisez(float a, float b, int i){
             } else {
                 b = x;
             }
-            i++;
         }else
             break;
-    }while(err(a,b)>=exp(-61));
-    cout<<i<<endl;
-    cout.precision(4);
-    cout<<x<<endl<<f(x);
+        err=abs((b-a)/2);  
+    }while(err>=1e-6);
+    cout << int(x * 10000) / 10000.0 <<endl;
 }
 
 int main() {
@@ -35,6 +29,6 @@ int main() {
         cin >> a;
         cin >> b;
     }while(f(a)*f(b)>=0);
-    bisez(a,b,0);
+    bisez(a,b);
     return 0;
 }
